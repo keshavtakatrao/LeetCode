@@ -1,27 +1,27 @@
-import math
 class MinStack:
 
     def __init__(self):
         self.arr = []
+        self.min_stack = []
 
     def push(self, val: int) -> None:
         self.arr.append(val)
+        if not self.min_stack or val <= self.min_stack[-1]:
+            self.min_stack.append(val)
 
     def pop(self) -> None:
-        self.arr.pop()
+        if self.arr:
+            if self.arr[-1] == self.min_stack[-1]:
+                self.min_stack.pop()
+            self.arr.pop()
 
     def top(self) -> int:
-        return self.arr[-1]
+        if self.arr:
+            return self.arr[-1]
 
     def getMin(self) -> int:
-        min = math.inf
-        
-        for i in self.arr:
-            if i < min:
-                min = i
-                
-        return min
-        
+        if self.min_stack:
+            return self.min_stack[-1]
 
 
 # Your MinStack object will be instantiated and called as such:
